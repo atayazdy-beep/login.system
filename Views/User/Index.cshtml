@@ -1,2 +1,97 @@
-@{ ViewData["Title"] = "پنل کاربر"; }
-<div class="simple-page"><section class="dashboard-card"><span class="eyebrow">پنل اختصاصی</span><h1>خوش آمدید، کاربر گرامی</h1><p>ورود کاربر با موفقیت انجام شد.</p><div class="dashboard-mark">♧</div><form asp-controller="Account" asp-action="Logout" method="post"><button class="submit" type="submit">خروج از حساب</button></form></section></div>
+@{
+    ViewData["Title"] = "صفحه اصلی کاربر";
+    var displayName = User.Identity?.Name ?? "کاربر گرامی";
+}
+
+<style>
+    .user-home { min-height:100vh; background:#f3f6fb; padding:28px 5%; direction:rtl; font-family:Tahoma,Arial,sans-serif; color:#172b45; }
+    .uh-wrap { max-width:1150px; margin:auto; }
+    .uh-top { display:flex; justify-content:space-between; align-items:center; gap:18px; flex-wrap:wrap; margin-bottom:28px; }
+    .uh-brand { display:flex; align-items:center; gap:12px; }
+    .uh-logo { width:48px; height:48px; display:grid; place-items:center; border-radius:15px; background:#dff7ef; color:#159875; font-size:25px; }
+    .uh-brand strong { display:block; font-size:19px; }
+    .uh-brand small { display:block; color:#8190a3; margin-top:5px; font-size:11px; }
+    .uh-user { display:flex; align-items:center; gap:12px; background:#fff; border:1px solid #e6ecf3; border-radius:14px; padding:10px 14px; }
+    .uh-avatar { width:38px; height:38px; border-radius:50%; background:#eaf0ff; color:#3268d8; display:grid; place-items:center; font-weight:bold; }
+    .uh-user small { display:block; color:#8794a6; margin-top:4px; font-size:11px; }
+    .uh-hero { background:linear-gradient(115deg,#123c4b,#167d70); color:white; border-radius:23px; padding:30px 32px; display:flex; align-items:center; justify-content:space-between; gap:20px; overflow:hidden; position:relative; }
+    .uh-hero:after { content:""; position:absolute; width:230px; height:230px; border:1px solid #ffffff24; border-radius:50%; left:7%; top:-100px; }
+    .uh-hero h1 { font-size:25px; margin:0 0 12px; line-height:1.8; }
+    .uh-hero p { color:#d5eee9; font-size:13px; line-height:2; margin:0; }
+    .uh-hero-mark { font-size:65px; opacity:.9; z-index:1; padding:0 18px; }
+    .uh-section-title { margin:30px 0 15px; font-size:17px; }
+    .uh-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
+    .uh-card { background:white; border:1px solid #e5ebf2; border-radius:17px; padding:22px; min-height:155px; box-shadow:0 8px 24px #203b5b08; }
+    .uh-icon { width:43px; height:43px; border-radius:13px; display:grid; place-items:center; background:#eaf7f3; color:#159875; font-size:22px; margin-bottom:15px; }
+    .uh-card h3 { margin:0 0 9px; font-size:15px; }
+    .uh-card p { color:#8491a3; font-size:12px; line-height:1.9; margin:0; }
+    .uh-note { margin-top:20px; padding:16px 18px; background:#fff; border:1px solid #e5ebf2; border-radius:14px; color:#718096; font-size:12px; line-height:2; }
+    .uh-bottom { display:flex; justify-content:space-between; align-items:center; gap:15px; flex-wrap:wrap; margin-top:24px; }
+    .uh-bottom small { color:#98a3b2; font-size:11px; }
+    .uh-logout { border:0; border-radius:10px; background:#fff; color:#bd4b4b; border:1px solid #f0dede; padding:11px 18px; font:13px Tahoma; cursor:pointer; }
+    .uh-logout:hover { background:#fff5f5; }
+    @@media(max-width:800px) { .uh-grid { grid-template-columns:1fr; } .uh-hero { padding:24px; } .uh-hero h1 { font-size:21px; } .uh-hero-mark { font-size:48px; } }
+</style>
+
+<main class="user-home">
+    <div class="uh-wrap">
+        <header class="uh-top">
+            <div class="uh-brand">
+                <div class="uh-logo">♻</div>
+                <div>
+                    <strong>پاک‌زیست</strong>
+                    <small>سامانه مدیریت و جمع‌آوری پسماند</small>
+                </div>
+            </div>
+
+            <div class="uh-user">
+                <div class="uh-avatar">ک</div>
+                <div>
+                    <strong>@displayName</strong>
+                    <small>حساب کاربری</small>
+                </div>
+            </div>
+        </header>
+
+        <section class="uh-hero">
+            <div>
+                <h1>سلام، @displayName 👋</h1>
+                <p>به پنل کاربری پاک‌زیست خوش آمدید.<br />از این بخش می‌توانید خدمات مربوط به مدیریت پسماند را دنبال کنید.</p>
+            </div>
+            <div class="uh-hero-mark" aria-hidden="true">♻</div>
+        </section>
+
+        <h2 class="uh-section-title">دسترسی سریع</h2>
+
+        <section class="uh-grid">
+            <article class="uh-card">
+                <div class="uh-icon">＋</div>
+                <h3>ثبت درخواست جمع‌آوری</h3>
+                <p>درخواست جدید برای جمع‌آوری پسماند ثبت کنید.</p>
+            </article>
+            <article class="uh-card">
+                <div class="uh-icon">⌕</div>
+                <h3>پیگیری درخواست‌ها</h3>
+                <p>وضعیت درخواست‌های ثبت‌شده خود را مشاهده کنید.</p>
+            </article>
+            <article class="uh-card">
+                <div class="uh-icon">♙</div>
+                <h3>اطلاعات حساب کاربری</h3>
+                <p>اطلاعات حساب و مشخصات کاربری خود را بررسی کنید.</p>
+            </article>
+        </section>
+
+        <div class="uh-note">
+            <strong>راهنما:</strong>
+            گزینه‌های این صفحه در حال حاضر نمای ظاهری پنل هستند. برای فعال شدن ثبت و پیگیری درخواست‌ها، باید صفحات و امکانات مربوط به آن‌ها به پروژه اضافه شوند.
+        </div>
+
+        <footer class="uh-bottom">
+            <small>© پاک‌زیست — سامانه مدیریت پسماند</small>
+            <form asp-controller="Account" asp-action="Logout" method="post">
+                @Html.AntiForgeryToken()
+                <button class="uh-logout" type="submit">خروج از حساب</button>
+            </form>
+        </footer>
+    </div>
+</main>

@@ -1,0 +1,48 @@
+@model LoginViewModel
+@{
+    ViewData["Title"] = "ورود به سامانه";
+    var isAdmin = Model.Role == "Admin";
+}
+<div class="page">
+    <aside class="brand-side">
+        <div class="brand"><span class="brand-icon">♻</span><div><b>پاک‌زیست</b><small>سامانه مدیریت جمع‌آوری پسماند</small></div></div>
+        <div class="hero">
+            <span class="tag">سامانه داخلی سازمان</span>
+            <h1>مدیریت هوشمند،<br />محیط زیست پاک‌تر</h1>
+            <p>برای ادامه، نوع حساب خود را انتخاب کرده و با اطلاعات کاربری وارد سامانه شوید.</p>
+            <div class="chips"><span>مدیریت متمرکز</span><span>دسترسی امن</span><span>پنل اختصاصی</span></div>
+        </div>
+        <small class="copyright">سامانه مدیریت جمع‌آوری پسماند</small>
+    </aside>
+    <main class="main-side">
+        <section class="login-card">
+            <span class="eyebrow">خوش آمدید</span>
+            <h2>ورود به سامانه</h2>
+            <p class="muted">نوع حساب خود را انتخاب کنید.</p>
+            <div class="tabs">
+                <a class="tab @(isAdmin ? "active" : "")" asp-action="Login" asp-route-role="Admin">ورود ادمین</a>
+                <a class="tab @(!isAdmin ? "active" : "")" asp-action="Login" asp-route-role="User">ورود کاربر</a>
+            </div>
+            <h3>@(isAdmin ? "ورود مدیر سیستم" : "ورود کاربر سیستم")</h3>
+            <p class="muted small">@(isAdmin ? "اطلاعات حساب مدیر را وارد کنید." : "اطلاعات حساب کاربری خود را وارد کنید.")</p>
+            <form asp-action="Login" method="post">
+                @Html.AntiForgeryToken()
+                <input asp-for="Role" type="hidden" />
+                <input asp-for="ReturnUrl" type="hidden" />
+                <div asp-validation-summary="ModelOnly" class="validation"></div>
+                <label asp-for="Username"></label>
+                <input asp-for="Username" class="field" placeholder="نام کاربری را وارد کنید" autocomplete="username" />
+                <span asp-validation-for="Username" class="validation"></span>
+                <label asp-for="Password"></label>
+                <input asp-for="Password" class="field" placeholder="رمز عبور را وارد کنید" autocomplete="current-password" />
+                <span asp-validation-for="Password" class="validation"></span>
+                <div class="form-row">
+                    <label class="remember"><input asp-for="RememberMe" /> مرا به خاطر بسپار</label>
+                    <span class="hint">ورود امن به سامانه</span>
+                </div>
+                <button class="submit" type="submit">@(isAdmin ? "ورود به پنل مدیریت" : "ورود به پنل کاربری")</button>
+            </form>
+            <div class="foot">© سامانه پاک‌زیست</div>
+        </section>
+    </main>
+</div>
